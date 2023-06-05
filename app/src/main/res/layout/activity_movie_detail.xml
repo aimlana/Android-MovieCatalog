@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MovieDetailActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="550dp">
+
+                <ImageView
+                    android:id="@+id/posterDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/movie_image"
+                    android:scaleType="centerCrop"
+                    tools:src="@tools:sample/avatars" />
+
+                <ImageView
+                    android:id="@+id/back_btn"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/arrow_back"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="32dp"
+                    app:tint="@color/white" />
+
+                <ImageView
+                    android:id="@+id/favorite_btn"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/favorite_border"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginTop="32dp"
+                    app:tint="@color/white" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/titleDetail"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="30dp"
+                    android:textColor="#012A3D"
+                    android:textStyle="bold"
+                    android:textSize="28sp"
+                    tools:text="The Irregular" />
+
+                <TextView
+                    android:id="@+id/releaseDateDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="28dp"
+                    android:layout_marginEnd="30dp"
+                    tools:text="6 Juni 2023"
+                    android:textColor="#457B9D"
+                    android:textSize="18sp" />
+
+
+                <TextView
+                    android:id="@+id/ratingTextDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/titleDetail"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginEnd="30dp"
+                    android:textColor="#457B9D"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    tools:text="8.5" />
+
+                <LinearLayout
+                    android:id="@+id/dotsDetail"
+                    android:layout_marginTop="-4dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_below="@+id/titleDetail"
+                    android:layout_toStartOf="@+id/ratingTextDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+
+                <TextView
+                    android:id="@+id/overviewTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/titleDetail"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="30dp"
+                    android:text="@string/overview"
+                    android:textColor="#457B9D"
+                    android:textStyle="bold"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/overview"
+                    android:layout_below="@+id/overviewTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:textColor="#1D3557"
+                    android:textSize="14sp"
+                    android:text="@string/overview"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
