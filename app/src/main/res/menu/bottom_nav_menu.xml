@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/movies_btn"
+        android:title="Movies"
+        android:icon="@drawable/movie"/>
+
+    <item
+        android:id="tv_btn"
+        android:title="Tv Shows"
+        android:icon="@drawable/tv"/>
+
+    <item
+        android:id="@+id/favorite_btn"
+        android:title="Favorites"
+        android:icon="@drawable/favorite"/>
+
+</menu>
