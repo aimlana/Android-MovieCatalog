@@ -7,16 +7,39 @@
     tools:context=".MovieFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_movie"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollinngViewBehavior"
-        tools:listitem="@layout/movie_item"/>
-
-    <TextView
+        android:layout_margin="0dp"
+        tools:listitem="@layout/movie_item"
+        tools:itemCount="1"/>
+    
+    <ProgressBar
+        android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Movie"
         android:layout_centerInParent="true"/>
+
+    <LinearLayout
+        android:id="@+id/ll_fail_connection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:id="@+id/refresh_btn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/refresh"
+            android:layout_gravity="center"
+            app:tint="@color/gray" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/please_check_your_internet_connection"
+            android:gravity="center"/>
+
+    </LinearLayout>
 
 </RelativeLayout>
