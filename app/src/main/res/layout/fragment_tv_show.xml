@@ -13,4 +13,10 @@
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollinngViewBehavior"
         tools:listitem="@layout/movie_item"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TV Show"
+        android:layout_centerInParent="true"/>
+
 </RelativeLayout>
