@@ -10,11 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="149dp"
         android:layout_marginTop="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:paddingStart="136dp"
-        android:paddingEnd="18dp"
-        android:paddingTop="18dp"
+        android:layout_marginHorizontal="16dp"
+        android:paddingStart="148dp"
+        android:paddingEnd="24dp"
+        android:paddingTop="20dp"
         android:elevation="2dp"
         android:background="@drawable/card_layout">
 
@@ -23,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:textColor="#A5C9FB"
+            android:textColor="#FFFFFF"
             android:textSize="18sp"
             tools:text="The Irregular" />
 
@@ -68,7 +67,8 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/star"
-                android:layout_marginEnd="4dp"/>
+                android:layout_marginEnd="4dp"
+                app:tint="#FFC107" />
 
             <TextView
                 android:id="@+id/ratingText"
@@ -77,10 +77,9 @@
                 tools:text="8.5"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:textColor="#FFFFFF"/>
+                android:textColor="#FFC107"/>
 
         </LinearLayout>
-
 
     </RelativeLayout>
 
@@ -88,7 +87,7 @@
         android:id="@+id/posterViewModel"
         android:layout_width="100dp"
         android:layout_height="150dp"
-        android:layout_marginStart="48dp"
+        android:layout_marginStart="44dp"
         android:layout_marginTop="-170dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="15dp">
