@@ -7,11 +7,15 @@
     tools:context=".MovieFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_movie"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="0dp"
-        tools:listitem="@layout/movie_item"
-        tools:itemCount="1"/>
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        tools:itemCount="1"
+        tools:listitem="@layout/movie_item" />
     
     <ProgressBar
         android:id="@+id/progress_bar"
