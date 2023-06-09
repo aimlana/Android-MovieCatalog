@@ -1,8 +1,10 @@
-package com.example.finalmobile;
+package com.example.finalmobile.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.finalmobile.R;
 
 public class MovieDetailActivity extends AppCompatActivity {
 

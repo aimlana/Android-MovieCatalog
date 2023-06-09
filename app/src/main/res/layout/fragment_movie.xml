@@ -4,18 +4,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MovieFragment">
+    tools:context=".fragment.MovieFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_movie"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="0dp"
-        tools:itemCount="1"
-        tools:listitem="@layout/movie_item" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        tools:listitem="@layout/content_item" />
     
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -36,7 +34,8 @@
             android:layout_height="50dp"
             android:src="@drawable/refresh"
             android:layout_gravity="center"
-            app:tint="@color/gray" />
+            app:tint="@color/gray"
+            android:onClick="refresh"/>
 
         <TextView
             android:layout_width="wrap_content"

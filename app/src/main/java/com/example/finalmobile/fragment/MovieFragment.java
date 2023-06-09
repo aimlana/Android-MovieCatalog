@@ -1,4 +1,4 @@
-package com.example.finalmobile;
+package com.example.finalmobile.fragment;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -19,88 +19,80 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.finalmobile.R;
 import com.example.finalmobile.adapter.MovieAdapter;
 import com.example.finalmobile.api.ApiConfig;
-import com.example.finalmobile.api.DataResponse;
-import com.example.finalmobile.models.MovieModels;
+import com.example.finalmobile.api.MovieDataResponse;
+import com.example.finalmobile.api.MovieResponse;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MovieFragment extends Fragment {
-    private RecyclerView movieRv;
+    private RecyclerView recyclerView;
     private LinearLayout refreshLayout;
     private ProgressBar progressBar;
+    String API_KEY = "f9e39e8702a4db5c2e50a6b357d95734";
+//    MovieAdapter movieAdapter;
     private Handler handler;
     private ImageView refreshBtn;
-    public static ArrayList<MovieModels> movieModels =new ArrayList<>();
+    public static ArrayList<MovieResponse> movieModels = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_movie, container, false);
-    }
+        View view = inflater.inflate(R.layout.fragment_movie, container, false);
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        setView();
-        getApiData();
-        loadData();
-
+        refreshLayout = view.findViewById(R.id.ll_fail_connection);
+        recyclerView = view.findViewById(R.id.rv_movie);
+        progressBar = view.findViewById(R.id.progress_bar);
+        refreshBtn = view.findViewById(R.id.refresh_btn);
         handler = new Handler();
 
-        movieRv.setHasFixedSize(true);
-        movieRv.setLayoutManager(new LinearLayoutManager(getContext()));
+        loadData();
+        getApiData();
 
-        MovieAdapter movieAdapter = new MovieAdapter(getContext(), movieModels);
-        movieRv.setAdapter(movieAdapter);
 
+        return view;
     }
 
-    public void setView() {
-        refreshLayout = getView().findViewById(R.id.ll_fail_connection);
-        movieRv = getView().findViewById(R.id.rv_movie);
-        progressBar = getView().findViewById(R.id.progress_bar);
-        refreshBtn = getView().findViewById(R.id.refresh_btn);
-    }
 
     private void getApiData() {
        if (isNetworkAvailable()) {
             progressBar.setVisibility(View.VISIBLE);
             refreshLayout.setVisibility(View.GONE);
-            movieRv.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.VISIBLE);
 
-           Call<DataResponse> call = ApiConfig.getApiService().getPopularMovies("f9e39e8702a4db5c2e50a6b357d95734");
-           call.enqueue(new Callback<DataResponse>() {
+           Call<MovieDataResponse> call = ApiConfig.getApiService().getPopularMovies(API_KEY);
+           call.enqueue(new Callback<MovieDataResponse>() {
                @Override
-               public void onResponse(Call<DataResponse> call, Response<DataResponse> response) {
+               public void onResponse(Call<MovieDataResponse> call, Response<MovieDataResponse> response) {
                    if (response.isSuccessful()) {
-                       if (response.body() != null) {
-                           List<MovieModels> userResponse = response.body().getData();
-                           MovieAdapter movieAdapter = new MovieAdapter(requireContext(), userResponse);
-                           movieRv.setAdapter(movieAdapter);
+                       if (response.body() != null)      {
+                           ArrayList<MovieResponse> userResponse = response.body().getData();
+                           MovieAdapter movieAdapter = new MovieAdapter(getContext(), userResponse);
+                           recyclerView.setHasFixedSize(true);
+                           recyclerView.setAdapter(movieAdapter);
+                           GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+                           recyclerView.setLayoutManager(layoutManager);
+                           recyclerView.setAdapter(movieAdapter);
                        } else {
                            if (response.errorBody() != null) {
-                               Log.e("API Failure", "onFailure" + response.errorBody().toString());
+                               Log.e("API failure", "onFailure" + response.errorBody().toString());
                            }
                        }
                    }
                }
 
                @Override
-               public void onFailure(Call<DataResponse> call, Throwable t) {
-                   Toast.makeText(getContext(), "Unable to fetch data!", Toast.LENGTH_LONG).show();
+               public void onFailure(Call<MovieDataResponse> call, Throwable t) {
+                   Toast.makeText(getContext(), "Unable to fetch data!", Toast.LENGTH_SHORT).show();
                }
            });
 
@@ -117,7 +109,7 @@ public class MovieFragment extends Fragment {
 
     private void refresh() {
         refreshLayout.setVisibility(View.VISIBLE);
-        movieRv.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
 
         refreshBtn.setOnClickListener(view -> {
@@ -143,10 +135,10 @@ public class MovieFragment extends Fragment {
                         //update ui in main thread
                         if (percentage == 100) {
                             progressBar.setVisibility(View.GONE);
-                            movieRv.setVisibility(View.VISIBLE);
+                            recyclerView.setVisibility(View.VISIBLE);
                         } else {
                             progressBar.setVisibility(View.VISIBLE);
-                            movieRv.setVisibility(View.GONE);
+                            recyclerView.setVisibility(View.GONE);
                         }
                     });
                 }
