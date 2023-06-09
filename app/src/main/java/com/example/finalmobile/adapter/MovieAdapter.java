@@ -14,17 +14,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.finalmobile.activity.MovieDetailActivity;
 import com.example.finalmobile.R;
-import com.example.finalmobile.api.MovieResponse;
+import com.example.finalmobile.model.MovieModel;
 
 import java.util.ArrayList;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
     Context context;
-    private ArrayList<MovieResponse> movieResponses;
+    private ArrayList<MovieModel> movieRespons;
 
-    public MovieAdapter(Context context, ArrayList<MovieResponse> movieResponses) {
+    public MovieAdapter(Context context, ArrayList<MovieModel> movieRespons) {
         this.context = context;
-        this.movieResponses = movieResponses;
+        this.movieRespons = movieRespons;
     }
     @NonNull
     @Override
@@ -36,7 +36,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MovieAdapter.ViewHolder holder, int position) {
-        MovieResponse movie = movieResponses.get(position);
+        MovieModel movie = movieRespons.get(position);
         holder.movieTitle.setText(movie.getTitle());
         holder.movieRelease.setText(movie.getReleaseDate());
         Glide.with(holder.itemView.getContext())
@@ -54,7 +54,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return movieResponses.size();
+        return movieRespons.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

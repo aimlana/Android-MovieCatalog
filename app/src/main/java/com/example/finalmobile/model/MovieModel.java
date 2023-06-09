@@ -1,8 +1,8 @@
-package com.example.finalmobile.api;
+package com.example.finalmobile.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class MovieResponse {
+public class MovieModel {
     @SerializedName("id")
     private String id;
     @SerializedName("poster_path")
@@ -12,7 +12,7 @@ public class MovieResponse {
     @SerializedName("release_date")
     private String releaseDate;
 
-    public MovieResponse(String id, String posterPath, String title, String releaseDate) {
+    public MovieModel(String id, String posterPath, String title, String releaseDate) {
         this.id = id;
         this.posterPath = posterPath;
         this.title = title;

@@ -26,8 +26,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.finalmobile.R;
 import com.example.finalmobile.adapter.MovieAdapter;
 import com.example.finalmobile.api.ApiConfig;
-import com.example.finalmobile.api.MovieDataResponse;
-import com.example.finalmobile.api.MovieResponse;
+import com.example.finalmobile.dataresponse.MovieResponse;
+import com.example.finalmobile.model.MovieModel;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -41,7 +41,7 @@ public class MovieFragment extends Fragment {
 //    MovieAdapter movieAdapter;
     private Handler handler;
     private ImageView refreshBtn;
-    public static ArrayList<MovieResponse> movieModels = new ArrayList<>();
+    public static ArrayList<MovieModel> movieModels = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,13 +69,13 @@ public class MovieFragment extends Fragment {
             refreshLayout.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
 
-           Call<MovieDataResponse> call = ApiConfig.getApiService().getPopularMovies(API_KEY);
-           call.enqueue(new Callback<MovieDataResponse>() {
+           Call<MovieResponse> call = ApiConfig.getApiService().getPopularMovies(API_KEY);
+           call.enqueue(new Callback<MovieResponse>() {
                @Override
-               public void onResponse(Call<MovieDataResponse> call, Response<MovieDataResponse> response) {
+               public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                    if (response.isSuccessful()) {
                        if (response.body() != null)      {
-                           ArrayList<MovieResponse> userResponse = response.body().getData();
+                           ArrayList<MovieModel> userResponse = response.body().getData();
                            MovieAdapter movieAdapter = new MovieAdapter(getContext(), userResponse);
                            recyclerView.setHasFixedSize(true);
                            recyclerView.setAdapter(movieAdapter);
@@ -91,7 +91,7 @@ public class MovieFragment extends Fragment {
                }
 
                @Override
-               public void onFailure(Call<MovieDataResponse> call, Throwable t) {
+               public void onFailure(Call<MovieResponse> call, Throwable t) {
                    Toast.makeText(getContext(), "Unable to fetch data!", Toast.LENGTH_SHORT).show();
                }
            });

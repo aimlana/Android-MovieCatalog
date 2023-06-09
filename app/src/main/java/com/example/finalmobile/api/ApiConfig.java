@@ -7,13 +7,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiConfig {
     public static ApiService getApiService() {
-        // Membuat HttpLoggingInterceptor
+        // HttpLoggingInterceptor
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-        // Membuat OkHttpClient dengan interceptor
+        // OkHttpClient dengan interceptor
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(loggingInterceptor);
+
+        // Retrofit API
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.themoviedb.org/3/")
                 .addConverterFactory(GsonConverterFactory.create())
