@@ -1,21 +1,19 @@
-package com.example.finalmobile.activity;
-
-import android.os.Bundle;
-import android.widget.TextView;
+package com.example.appmovie.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.example.finalmobile.R;
-import com.example.finalmobile.fragment.FavoriteFragment;
-import com.example.finalmobile.fragment.MovieFragment;
-import com.example.finalmobile.fragment.TvShowFragment;
+import android.os.Bundle;
+import android.widget.TextView;
+
+import com.example.appmovie.R;
+import com.example.appmovie.fragment.FavoriteFragment;
+import com.example.appmovie.fragment.MovieFragment;
+import com.example.appmovie.fragment.TvShowFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
-
     BottomNavigationView bottomNavigationView;
     TextView barTitle;
 
@@ -53,13 +51,6 @@ public class MainActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .commit();
-
-//        if (!(fragment instanceof MovieFragment)) {
-//            fragmentManager
-//                    .beginTransaction()
-//                    .add(R.id.fragment_container, new MovieFragment(), MovieFragment.class.getSimpleName())
-//                    .commit();
-//        }
     }
 
     public void setView() {

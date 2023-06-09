@@ -1,4 +1,4 @@
-package com.example.finalmobile;
+package com.example.appmovie;
 
 import org.junit.Test;
 

@@ -1,6 +1,6 @@
-package com.example.finalmobile.dataresponse;
+package com.example.appmovie.dataresponse;
 
-import com.example.finalmobile.model.TvModel;
+import com.example.appmovie.model.TvModel;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;

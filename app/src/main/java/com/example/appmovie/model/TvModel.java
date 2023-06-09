@@ -1,8 +1,11 @@
-package com.example.finalmobile.model;
+package com.example.appmovie.model;
+
+
 
 import com.google.gson.annotations.SerializedName;
 
 public class TvModel {
+
     @SerializedName("id")
     private String id;
 
@@ -25,13 +28,7 @@ public class TvModel {
     private String overview;
 
     public TvModel(String id, String posterPath, String name, String firstAirDate, String backdropPath, String rating, String overview) {
-        this.id = id;
-        this.posterPath = posterPath;
-        this.name = name;
-        this.firstAirDate = firstAirDate;
-        this.backdropPath = backdropPath;
-        this.rating = rating;
-        this.overview = overview;
+
     }
 
     public String getId() {
@@ -62,3 +59,4 @@ public class TvModel {
         return overview;
     }
 }
+

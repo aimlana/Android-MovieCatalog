@@ -1,6 +1,6 @@
-package com.example.finalmobile.dataresponse;
+package com.example.appmovie.dataresponse;
 
-import com.example.finalmobile.model.MovieModel;
+import com.example.appmovie.model.MovieModel;
 import com.google.gson.annotations.SerializedName;
 
 public class MovieDetailResponse {

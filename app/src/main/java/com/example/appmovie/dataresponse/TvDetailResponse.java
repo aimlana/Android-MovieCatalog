@@ -1,6 +1,6 @@
-package com.example.finalmobile.dataresponse;
+package com.example.appmovie.dataresponse;
 
-import com.example.finalmobile.model.TvModel;
+import com.example.appmovie.model.TvModel;
 import com.google.gson.annotations.SerializedName;
 
 public class TvDetailResponse {
@@ -8,7 +8,7 @@ public class TvDetailResponse {
 
     private TvModel results;
 
-    public TvModel getData4() {
+    public TvModel getResults() {
         return results;
     }
 }
