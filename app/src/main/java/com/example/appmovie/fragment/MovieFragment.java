@@ -6,8 +6,6 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,11 +20,11 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.appmovie.model.MovieModel;
 import com.example.appmovie.adapter.MovieAdapter;
-import com.example.appmovie.api.ApiConfig;
+import com.example.appmovie.dataresponse.MovieDataResponse;
+import com.example.appmovie.model.MovieModel;
 import com.example.appmovie.R;
-import com.example.appmovie.dataresponse.MovieResponse;
+import com.example.appmovie.api.ApiConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +39,8 @@ public class MovieFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private LinearLayout retryicon;
+
+    private ImageView im2;
     private ProgressBar progressBar;
 
     private Handler handler;
@@ -54,10 +54,10 @@ public class MovieFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_movie, container, false);
 
-        retryicon = view.findViewById(R.id.ll_fail_connection);
+        retryicon = view.findViewById(R.id.retryicon);
         recyclerView = view.findViewById(R.id.recyclerView);
-        progressBar = view.findViewById(R.id.progress_bar);
-        Retryy = view.findViewById(R.id.refresh_btn);
+        progressBar = view.findViewById(R.id.pb1);
+        Retryy = view.findViewById(R.id.retry);
 
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
@@ -76,13 +76,13 @@ public class MovieFragment extends Fragment {
             recyclerView.setVisibility(View.VISIBLE);
 
             //call -> untuk mengambil data di reqres.in disini dia mengambil data perpage
-            Call<MovieResponse> call = ApiConfig.getApiService().getPopularMovies("35254a98cc59f9518caf1bacbf0f5792");
-            call.enqueue(new Callback<MovieResponse>() {
+            Call<MovieDataResponse> call = ApiConfig.getApiService().getPopularMovies("35254a98cc59f9518caf1bacbf0f5792");
+            call.enqueue(new Callback<MovieDataResponse>() {
                 @Override
-                public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                public void onResponse(Call<MovieDataResponse> call, Response<MovieDataResponse> response) {
                     if (response.isSuccessful()) {
                         if (response.body() != null) {
-                            List<MovieModel> userResponse = response.body().getResults(); // Assuming movie list is stored in the "data" field
+                            List<MovieModel> userResponse = response.body().getData(); // Assuming movie list is stored in the "data" field
                             MovieAdapter adapter = new MovieAdapter(getContext(), userResponse);
                             recyclerView.setAdapter(adapter);
                         } else {
@@ -94,7 +94,7 @@ public class MovieFragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<MovieResponse> call, Throwable t) {
+                public void onFailure(Call<MovieDataResponse> call, Throwable t) {
                     Toast.makeText(getContext(), "Unable to fetch data!", Toast.LENGTH_SHORT).show();
                 }
             });

@@ -12,34 +12,34 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.appmovie.activity.TvShowDetailActivity;
 import com.example.appmovie.R;
-import com.example.appmovie.model.TvModel;
+import com.example.appmovie.activity.TvShowDetailActivity;
+import com.example.appmovie.model.Tvshow;
 
 import java.util.List;
 
-public class Adaptershow extends RecyclerView.Adapter<Adaptershow.ViewHolder> {
+public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.ViewHolder> {
 
     Context context;
-    private List<TvModel> dataPerson;
+    private List<Tvshow> dataPerson;
 
-    public Adaptershow(Context context, List<TvModel> dataPerson) {
+    public TvShowAdapter(Context context, List<Tvshow> dataPerson) {
         this.context = context;
         this.dataPerson = dataPerson;
     }
 
     @NonNull
     @Override
-    public Adaptershow.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TvShowAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.movie_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Adaptershow.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TvShowAdapter.ViewHolder holder, int position) {
         Context context = holder.itemView.getContext();
-        TvModel tvResponse = dataPerson.get(position);
+        Tvshow tvResponse = dataPerson.get(position);
         holder.setData(tvResponse, context);
 
     }
@@ -60,12 +60,13 @@ public class Adaptershow extends RecyclerView.Adapter<Adaptershow.ViewHolder> {
             Profile = itemView.findViewById(R.id.img1);
         }
 
-        public void setData(TvModel tv, Context context) {
+        public void setData(Tvshow tv, Context context) {
             String name = tv.getName();
             Name.setText(name);
-            date.setText(tv.getFirstAirDate());
+            date.setText(tv.getFirstAirDate().substring(0, 4));
             Glide.with(itemView.getContext()).load("https://image.tmdb.org/t/p/w500" + tv.getPosterPath())
                     .into(Profile);
+
             itemView.setOnClickListener(view -> {
                 Intent intent = new Intent(itemView.getContext(), TvShowDetailActivity.class);
                 intent.putExtra("tv_id", tv.getId());
@@ -77,5 +78,6 @@ public class Adaptershow extends RecyclerView.Adapter<Adaptershow.ViewHolder> {
                 itemView.getContext().startActivity(intent);
             });
         }
+
     }
 }

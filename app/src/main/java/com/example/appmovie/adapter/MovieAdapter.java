@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -52,21 +53,23 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView Name, date;
         ImageView Profile;
+        CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             Name = itemView.findViewById(R.id.tv1);
             date = itemView.findViewById(R.id.tv2);
             Profile = itemView.findViewById(R.id.img1);
+            cardView = itemView.findViewById(R.id.cv1);
         }
 
         public void setData(MovieModel movieModel, Context context) {
             String name = movieModel.getTitle();
             Name.setText(name);
-            date.setText(movieModel.getReleaseDate());
+            date.setText(movieModel.getReleaseDate().substring(0, 4));
             Glide.with(itemView.getContext()).load("https://image.tmdb.org/t/p/w500" + movieModel.getPosterPath())
                     .into(Profile);
-            itemView.setOnClickListener(view -> {
+            cardView.setOnClickListener(view -> {
                 Intent intent = new Intent(itemView.getContext(), MovieDetailActivity.class);
                 intent.putExtra("movie_id", movieModel.getId());
                 intent.putExtra("rating", movieModel.getRating());

@@ -20,11 +20,11 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.appmovie.adapter.Adaptershow;
-import com.example.appmovie.api.ApiConfig;
 import com.example.appmovie.R;
-import com.example.appmovie.model.TvModel;
-import com.example.appmovie.dataresponse.TvResponse;
+import com.example.appmovie.adapter.TvShowAdapter;
+import com.example.appmovie.dataresponse.TvShowDataResponse;
+import com.example.appmovie.model.Tvshow;
+import com.example.appmovie.api.ApiConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,7 @@ public class TvShowFragment extends Fragment {
     private Handler handler;
 
     private ImageView Retryy;
-    public static ArrayList<TvModel> dataPerson = new ArrayList<>();
+    public static ArrayList<Tvshow> dataPerson = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,11 +52,10 @@ public class TvShowFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tv_show, container, false);
 
-        retryicon = view.findViewById(R.id.ll_fail_connection);
+        retryicon = view.findViewById(R.id.retryicon);
         recyclerView = view.findViewById(R.id.recyclerView2);
-        progressBar = view.findViewById(R.id.progress_bar);
-        Retryy = view.findViewById(R.id.refresh_btn);
-
+        progressBar = view.findViewById(R.id.pb1);
+        Retryy = view.findViewById(R.id.retry);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
         handler = new Handler();
@@ -74,14 +73,14 @@ public class TvShowFragment extends Fragment {
             recyclerView.setVisibility(View.VISIBLE);
 
             //call -> untuk mengambil data di reqres.in disini dia mengambil data perpage
-            Call<TvResponse> call = ApiConfig.getApiService().getPopularTVShows("35254a98cc59f9518caf1bacbf0f5792");
-            call.enqueue(new Callback<TvResponse>() {
+            Call<TvShowDataResponse> call = ApiConfig.getApiService().getPopularTVShows("35254a98cc59f9518caf1bacbf0f5792");
+            call.enqueue(new Callback<TvShowDataResponse>() {
                 @Override
-                public void onResponse(Call<TvResponse> call, Response<TvResponse> response) {
+                public void onResponse(Call<TvShowDataResponse> call, Response<TvShowDataResponse> response) {
                     if (response.isSuccessful()) {
                         if (response.body() != null) {
-                            List<TvModel> userResponse = response.body().getResult(); // Assuming movie list is stored in the "data" field
-                            Adaptershow adapter = new Adaptershow(getContext(), userResponse);
+                            List<Tvshow> userResponse = response.body().getData3(); // Assuming movie list is stored in the "data" field
+                            TvShowAdapter adapter = new TvShowAdapter(getContext(), userResponse);
                             recyclerView.setAdapter(adapter);
                         } else {
                             if (response.errorBody() != null) {
@@ -92,7 +91,7 @@ public class TvShowFragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<TvResponse> call, Throwable t) {
+                public void onFailure(Call<TvShowDataResponse> call, Throwable t) {
                     Toast.makeText(getContext(), "Unable to fetch data!", Toast.LENGTH_SHORT).show();
                 }
             });

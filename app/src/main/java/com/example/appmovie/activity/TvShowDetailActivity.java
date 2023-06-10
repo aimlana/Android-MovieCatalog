@@ -14,9 +14,15 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.appmovie.R;
+import com.example.appmovie.model.Tvshow;
 import com.example.appmovie.api.ApiConfig;
-import com.example.appmovie.dataresponse.TvDetailResponse;
-import com.example.appmovie.model.TvModel;
+import com.example.appmovie.dataresponse.TvDetailDataResponse;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,8 +30,9 @@ import retrofit2.Response;
 
 public class TvShowDetailActivity extends AppCompatActivity {
 
-    private ImageView img2,img3,back;
-    private TextView tv4,tv5,tv6;
+    private ImageView img2, img3, back, love;
+    private TextView tv4, tv5, tv6;
+    boolean isFavorite = false;
 
 
     @Override
@@ -38,13 +45,23 @@ public class TvShowDetailActivity extends AppCompatActivity {
         tv5 = findViewById(R.id.tv5);
         tv6 = findViewById(R.id.tv6);
         back  = findViewById(R.id.backbutton);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(TvShowDetailActivity.this, MainActivity.class);
-                startActivity(intent);
+        love = findViewById(R.id.favbutton);
+
+        back.setOnClickListener(view -> {
+            Intent intent = new Intent(TvShowDetailActivity.this, MainActivity.class);
+            startActivity(intent);
+        });
+
+        love.setOnClickListener(view -> {
+            if (!isFavorite) {
+                love.setImageResource(R.drawable.red_favorite);
+                isFavorite = true;
+            } else {
+                love.setImageResource(R.drawable.baseline_favorite_border_24);
+                isFavorite = false;
             }
         });
+
         getDataApi();
     }
 
@@ -53,14 +70,14 @@ public class TvShowDetailActivity extends AppCompatActivity {
             Intent intent = getIntent();
             String tvid = intent.getStringExtra("tv_id");
             Toast.makeText(this, tvid, Toast.LENGTH_SHORT).show();
-            Call<TvDetailResponse> call = ApiConfig.getApiService().getTVShowDetails(Integer.valueOf(tvid), "35254a98cc59f9518caf1bacbf0f5792");
-            call.enqueue(new Callback<TvDetailResponse>() {
+            Call<TvDetailDataResponse> call = ApiConfig.getApiService().getTVShowDetails(Integer.valueOf(tvid), "35254a98cc59f9518caf1bacbf0f5792");
+            call.enqueue(new Callback<TvDetailDataResponse>() {
                 @Override
-                public void onResponse(Call<TvDetailResponse> call, Response<TvDetailResponse> response) {
+                public void onResponse(Call<TvDetailDataResponse> call, Response<TvDetailDataResponse> response) {
                     if (response.isSuccessful()) {
                         Toast.makeText(TvShowDetailActivity.this, "test", Toast.LENGTH_SHORT).show();
                         if (response.body() != null) {
-                            TvModel tv = response.body().getResults();
+                            Tvshow tv = response.body().getData4();
                             String judul = getIntent().getStringExtra("judul");
                             String rating = getIntent().getStringExtra("rating");
                             String synopsis = getIntent().getStringExtra("synopsis");
@@ -82,7 +99,7 @@ public class TvShowDetailActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<TvDetailResponse> call, Throwable t) {
+                public void onFailure(Call<TvDetailDataResponse> call, Throwable t) {
                     Toast.makeText(TvShowDetailActivity.this, "Unable to fetch data!", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -93,5 +110,20 @@ public class TvShowDetailActivity extends AppCompatActivity {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return networkInfo != null && networkInfo.isConnected();
+    }
+
+    public static String formatDate(String inputDate) {
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        DateFormat outputFormat = DateFormat.getDateInstance(DateFormat.LONG, Locale.getDefault());
+        String formattedDate = "";
+
+        try {
+            Date date = inputFormat.parse(inputDate);
+            formattedDate = outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return formattedDate;
     }
 }

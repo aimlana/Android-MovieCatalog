@@ -4,17 +4,17 @@
     <item
         android:id="@+id/movies_btn"
         android:title="Movies"
-        android:icon="@drawable/movie"/>
+        android:icon="@drawable/baseline_movie_24"/>
 
     <item
         android:id="@+id/tvshow_btn"
         android:title="TV Shows"
-        android:icon="@drawable/tv"/>
+        android:icon="@drawable/baseline_tv_24"/>
 
     <item
         android:id="@+id/favorite_btn"
         android:title="Favorites"
-        android:icon="@drawable/favorite"
+        android:icon="@drawable/baseline_favorite_24"
         android:iconTint="@color/black"/>
 
 </menu>

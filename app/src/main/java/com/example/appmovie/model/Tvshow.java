@@ -4,7 +4,7 @@ package com.example.appmovie.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class TvModel {
+public class Tvshow {
 
     @SerializedName("id")
     private String id;
@@ -27,7 +27,7 @@ public class TvModel {
     @SerializedName("overview")
     private String overview;
 
-    public TvModel(String id, String posterPath, String name, String firstAirDate, String backdropPath, String rating, String overview) {
+    public Tvshow(String id, String posterPath, String name, String firstAirDate, String backdropPath, String rating, String overview) {
 
     }
 

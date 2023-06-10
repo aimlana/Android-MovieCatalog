@@ -1,14 +1,14 @@
 package com.example.appmovie.dataresponse;
 
-import com.example.appmovie.model.TvModel;
+import com.example.appmovie.model.MovieModel;
 import com.google.gson.annotations.SerializedName;
 
-public class TvDetailResponse {
+public class MovieDetailDataResponse {
     @SerializedName("results")
 
-    private TvModel results;
+    private MovieModel results;
 
-    public TvModel getResults() {
+    public MovieModel getData2() {
         return results;
     }
 }

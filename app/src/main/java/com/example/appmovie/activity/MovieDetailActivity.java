@@ -13,10 +13,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.appmovie.model.MovieModel;
 import com.example.appmovie.R;
 import com.example.appmovie.api.ApiConfig;
-import com.example.appmovie.dataresponse.MovieDetailResponse;
-import com.example.appmovie.model.MovieModel;
+import com.example.appmovie.dataresponse.MovieDetailDataResponse;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,8 +30,9 @@ import retrofit2.Response;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
-    private ImageView img2,img3,back;
-    private TextView tv4,tv5,tv6;
+    private ImageView img2, img3, back, love;
+    private TextView tv4, tv5, tv6;
+    boolean isFavorite = false;
 
 
     @Override
@@ -37,14 +44,24 @@ public class MovieDetailActivity extends AppCompatActivity {
         tv4 = findViewById(R.id.tv4);
         tv5 = findViewById(R.id.tv5);
         tv6 = findViewById(R.id.tv6);
+        love = findViewById(R.id.favbutton);
         back  = findViewById(R.id.backbutton);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MovieDetailActivity.this, MainActivity.class);
-                startActivity(intent);
+
+        back.setOnClickListener(view -> {
+            Intent intent = new Intent(MovieDetailActivity.this, MainActivity.class);
+            startActivity(intent);
+        });
+
+        love.setOnClickListener(view -> {
+            if (!isFavorite) {
+                love.setImageResource(R.drawable.red_favorite);
+                isFavorite = true;
+            } else {
+                love.setImageResource(R.drawable.baseline_favorite_border_24);
+                isFavorite = false;
             }
         });
+
         getDataApi();
     }
 
@@ -53,14 +70,14 @@ public class MovieDetailActivity extends AppCompatActivity {
             Intent intent = getIntent();
             String movieId = intent.getStringExtra("movie_id");
             Toast.makeText(this, movieId, Toast.LENGTH_SHORT).show();
-            Call<MovieDetailResponse> call = ApiConfig.getApiService().getMovieDetails(Integer.valueOf(movieId), "35254a98cc59f9518caf1bacbf0f5792");
-            call.enqueue(new Callback<MovieDetailResponse>() {
+            Call<MovieDetailDataResponse> call = ApiConfig.getApiService().getMovieDetails(Integer.valueOf(movieId), "35254a98cc59f9518caf1bacbf0f5792");
+            call.enqueue(new Callback<MovieDetailDataResponse>() {
                 @Override
-                public void onResponse(Call<MovieDetailResponse> call, Response<MovieDetailResponse> response) {
+                public void onResponse(Call<MovieDetailDataResponse> call, Response<MovieDetailDataResponse> response) {
                     if (response.isSuccessful()) {
                         Toast.makeText(MovieDetailActivity.this, "test", Toast.LENGTH_SHORT).show();
                         if (response.body() != null) {
-                            MovieModel movieModel = response.body().getResults();
+                            MovieModel movieModel = response.body().getData2();
                             String judul = getIntent().getStringExtra("judul");
                             String rating = getIntent().getStringExtra("rating");
                             String synopsis = getIntent().getStringExtra("synopsis");
@@ -82,7 +99,7 @@ public class MovieDetailActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<MovieDetailResponse> call, Throwable t) {
+                public void onFailure(Call<MovieDetailDataResponse> call, Throwable t) {
                     Toast.makeText(MovieDetailActivity.this, "Unable to fetch data!", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -93,5 +110,20 @@ public class MovieDetailActivity extends AppCompatActivity {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return networkInfo != null && networkInfo.isConnected();
-}
+    }
+
+    public static String formatDate(String inputDate) {
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        DateFormat outputFormat = DateFormat.getDateInstance(DateFormat.LONG, Locale.getDefault());
+        String formattedDate = "";
+
+        try {
+            Date date = inputFormat.parse(inputDate);
+            formattedDate = outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return formattedDate;
+    }
 }
