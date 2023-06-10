@@ -75,6 +75,7 @@ public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.ViewHolder
                 intent.putExtra("backdrop", tv.getBackdropPath());
                 intent.putExtra("judul", tv.getName());
                 intent.putExtra("poster", tv.getPosterPath());
+                intent.putExtra("date", tv.getFirstAirDate());
                 itemView.getContext().startActivity(intent);
             });
         }

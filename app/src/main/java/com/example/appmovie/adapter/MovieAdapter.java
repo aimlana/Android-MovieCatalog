@@ -64,11 +64,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         }
 
         public void setData(MovieModel movieModel, Context context) {
-            String name = movieModel.getTitle();
-            Name.setText(name);
+            Name.setText(movieModel.getTitle());
             date.setText(movieModel.getReleaseDate().substring(0, 4));
             Glide.with(itemView.getContext()).load("https://image.tmdb.org/t/p/w500" + movieModel.getPosterPath())
                     .into(Profile);
+
             cardView.setOnClickListener(view -> {
                 Intent intent = new Intent(itemView.getContext(), MovieDetailActivity.class);
                 intent.putExtra("movie_id", movieModel.getId());
@@ -77,6 +77,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                 intent.putExtra("backdrop", movieModel.getBackdropPath());
                 intent.putExtra("judul", movieModel.getTitle());
                 intent.putExtra("poster", movieModel.getPosterPath());
+                intent.putExtra("date", movieModel.getReleaseDate());
                 itemView.getContext().startActivity(intent);
             });
         }

@@ -31,7 +31,7 @@ import retrofit2.Response;
 public class TvShowDetailActivity extends AppCompatActivity {
 
     private ImageView img2, img3, back, love;
-    private TextView tv4, tv5, tv6;
+    private TextView tv4, tv5, tv6, date;
     boolean isFavorite = false;
 
 
@@ -44,12 +44,12 @@ public class TvShowDetailActivity extends AppCompatActivity {
         tv4 = findViewById(R.id.tv4);
         tv5 = findViewById(R.id.tv5);
         tv6 = findViewById(R.id.tv6);
+        date = findViewById(R.id.tv_date);
         back  = findViewById(R.id.backbutton);
         love = findViewById(R.id.favbutton);
 
         back.setOnClickListener(view -> {
-            Intent intent = new Intent(TvShowDetailActivity.this, MainActivity.class);
-            startActivity(intent);
+            finish();
         });
 
         love.setOnClickListener(view -> {
@@ -78,14 +78,19 @@ public class TvShowDetailActivity extends AppCompatActivity {
                         Toast.makeText(TvShowDetailActivity.this, "test", Toast.LENGTH_SHORT).show();
                         if (response.body() != null) {
                             Tvshow tv = response.body().getData4();
+
                             String judul = getIntent().getStringExtra("judul");
                             String rating = getIntent().getStringExtra("rating");
                             String synopsis = getIntent().getStringExtra("synopsis");
                             String backdropPath = getIntent().getStringExtra("backdrop");
                             String poster = getIntent().getStringExtra("poster");
+                            String dates = getIntent().getStringExtra("date");
+
                             tv4.setText(judul);
                             tv5.setText(rating);
                             tv6.setText(synopsis);
+                            date.setText(formatDate(dates));
+
                             Glide.with(TvShowDetailActivity.this)
                                     .load("https://image.tmdb.org/t/p/w500" + backdropPath)
                                     .into(img2);

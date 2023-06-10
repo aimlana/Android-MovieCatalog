@@ -24,8 +24,14 @@ public class MovieModel {
     @SerializedName("overview")
     private String synopsis;
 
-    public MovieModel(String posterPath, String releaseDate, String title, String BackdropPath, String rating, String synopsis){
-
+    public MovieModel(String id, String posterPath, String title, String releaseDate, String backdropPath, String rating, String synopsis) {
+        this.id = id;
+        this.posterPath = posterPath;
+        this.title = title;
+        this.releaseDate = releaseDate;
+        BackdropPath = backdropPath;
+        this.rating = rating;
+        this.synopsis = synopsis;
     }
 
     public String getId() {
