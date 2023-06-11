@@ -33,6 +33,7 @@ public class TvShowDetailActivity extends AppCompatActivity {
     private ImageView img2, img3, back, love;
     private TextView tv4, tv5, tv6, date;
     boolean isFavorite = false;
+    public static final int TYPE = 2;
 
 
     @Override
@@ -70,6 +71,7 @@ public class TvShowDetailActivity extends AppCompatActivity {
             Intent intent = getIntent();
             String tvid = intent.getStringExtra("tv_id");
             Toast.makeText(this, tvid, Toast.LENGTH_SHORT).show();
+
             Call<TvDetailDataResponse> call = ApiConfig.getApiService().getTVShowDetails(Integer.valueOf(tvid), "35254a98cc59f9518caf1bacbf0f5792");
             call.enqueue(new Callback<TvDetailDataResponse>() {
                 @Override

@@ -33,6 +33,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     private ImageView img2, img3, back, love;
     private TextView tv4, tv5, tv6, date;
     boolean isFavorite = false;
+    public static final int TYPE = 1;
 
 
     @Override
@@ -71,6 +72,7 @@ public class MovieDetailActivity extends AppCompatActivity {
             Intent intent = getIntent();
             String movieId = intent.getStringExtra("movie_id");
             Toast.makeText(this, movieId, Toast.LENGTH_SHORT).show();
+
             Call<MovieDetailDataResponse> call = ApiConfig.getApiService().getMovieDetails(Integer.valueOf(movieId), "35254a98cc59f9518caf1bacbf0f5792");
             call.enqueue(new Callback<MovieDetailDataResponse>() {
                 @Override
@@ -79,6 +81,7 @@ public class MovieDetailActivity extends AppCompatActivity {
                         Toast.makeText(MovieDetailActivity.this, "test", Toast.LENGTH_SHORT).show();
                         if (response.body() != null) {
                             MovieModel movieModel = response.body().getData2();
+
                             String judul = getIntent().getStringExtra("judul");
                             String rating = getIntent().getStringExtra("rating");
                             String synopsis = getIntent().getStringExtra("synopsis");

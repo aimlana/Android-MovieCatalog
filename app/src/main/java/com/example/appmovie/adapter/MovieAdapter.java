@@ -66,7 +66,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         public void setData(MovieModel movieModel, Context context) {
             Name.setText(movieModel.getTitle());
             date.setText(movieModel.getReleaseDate().substring(0, 4));
-            Glide.with(itemView.getContext()).load("https://image.tmdb.org/t/p/w500" + movieModel.getPosterPath())
+            Glide.with(itemView.getContext())
+                    .load("https://image.tmdb.org/t/p/w500" + movieModel.getPosterPath())
                     .into(Profile);
 
             cardView.setOnClickListener(view -> {

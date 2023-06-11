@@ -110,7 +110,7 @@ public class MovieFragment extends Fragment {
         executor.execute(() -> {
             try { //simulate process in background thread
                 for (int i = 0; i <= 10; i++) {
-                    Thread.sleep(100);
+                    Thread.sleep(150);
                     int percentage = i * 10;
                     handler.post(() -> {
                         //update ui in main thread
