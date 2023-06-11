@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,6 +41,12 @@ public class TvShowDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tv_show_detail);
+
+        setView();
+        getDataApi();
+    }
+
+    private void setView() {
         img2 = findViewById(R.id.img2);
         img3 = findViewById(R.id.img3);
         tv4 = findViewById(R.id.tv4);
@@ -62,8 +69,6 @@ public class TvShowDetailActivity extends AppCompatActivity {
                 isFavorite = false;
             }
         });
-
-        getDataApi();
     }
 
     private void getDataApi() {
@@ -101,13 +106,13 @@ public class TvShowDetailActivity extends AppCompatActivity {
                                     .into(img3);
                         }
                     } else {
-                        Toast.makeText(TvShowDetailActivity.this, "Error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        Log.d("TvShowDetailActivity", "Unable to fetch data!");
                     }
                 }
 
                 @Override
                 public void onFailure(Call<TvDetailDataResponse> call, Throwable t) {
-                    Toast.makeText(TvShowDetailActivity.this, "Unable to fetch data!", Toast.LENGTH_SHORT).show();
+                    Log.d("TvShowDetailActivity", "Unable to fetch data!");
                 }
             });
         }

@@ -46,7 +46,9 @@ public class MovieFragment extends Fragment {
     private Handler handler;
 
     private ImageView Retryy;
+
     public static ArrayList<MovieModel> dataPerson = new ArrayList<>();
+    public static final String API_KEY = "35254a98cc59f9518caf1bacbf0f5792";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,7 +78,7 @@ public class MovieFragment extends Fragment {
             recyclerView.setVisibility(View.VISIBLE);
 
             //call -> untuk mengambil data di reqres.in disini dia mengambil data perpage
-            Call<MovieDataResponse> call = ApiConfig.getApiService().getPopularMovies("35254a98cc59f9518caf1bacbf0f5792");
+            Call<MovieDataResponse> call = ApiConfig.getApiService().getPopularMovies(API_KEY);
             call.enqueue(new Callback<MovieDataResponse>() {
                 @Override
                 public void onResponse(Call<MovieDataResponse> call, Response<MovieDataResponse> response) {
@@ -87,7 +89,7 @@ public class MovieFragment extends Fragment {
                             recyclerView.setAdapter(adapter);
                         } else {
                             if (response.errorBody() != null) {
-                                Log.e("MainActivity", "onFailure: " + response.errorBody().toString());
+                                Log.d("MovieFragment", "Unable to fetch data!");
                             }
                         }
                     }
@@ -95,7 +97,7 @@ public class MovieFragment extends Fragment {
 
                 @Override
                 public void onFailure(Call<MovieDataResponse> call, Throwable t) {
-                    Toast.makeText(getContext(), "Unable to fetch data!", Toast.LENGTH_SHORT).show();
+                    Log.d("MovieFragment", "Unable to fetch data!");
                 }
             });
         } else {

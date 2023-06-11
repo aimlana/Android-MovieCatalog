@@ -40,11 +40,11 @@ public class TvShowFragment extends Fragment {
     private RecyclerView recyclerView;
     private LinearLayout retryicon;
     private ProgressBar progressBar;
-
     private Handler handler;
-
     private ImageView Retryy;
+
     public static ArrayList<Tvshow> dataPerson = new ArrayList<>();
+    public static final String API_KEY = "35254a98cc59f9518caf1bacbf0f5792";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,7 +73,7 @@ public class TvShowFragment extends Fragment {
             recyclerView.setVisibility(View.VISIBLE);
 
             //call -> untuk mengambil data di reqres.in disini dia mengambil data perpage
-            Call<TvShowDataResponse> call = ApiConfig.getApiService().getPopularTVShows("35254a98cc59f9518caf1bacbf0f5792");
+            Call<TvShowDataResponse> call = ApiConfig.getApiService().getPopularTVShows(API_KEY);
             call.enqueue(new Callback<TvShowDataResponse>() {
                 @Override
                 public void onResponse(Call<TvShowDataResponse> call, Response<TvShowDataResponse> response) {
@@ -84,7 +84,7 @@ public class TvShowFragment extends Fragment {
                             recyclerView.setAdapter(adapter);
                         } else {
                             if (response.errorBody() != null) {
-                                Log.e("MainActivity", "onFailure: " + response.errorBody().toString());
+                                Log.d("TvShowFragment", "Unable to fetch data!");
                             }
                         }
                     }
@@ -92,7 +92,7 @@ public class TvShowFragment extends Fragment {
 
                 @Override
                 public void onFailure(Call<TvShowDataResponse> call, Throwable t) {
-                    Toast.makeText(getContext(), "Unable to fetch data!", Toast.LENGTH_SHORT).show();
+                    Log.d("TvShowFragment", "Unable to fetch data!");
                 }
             });
         } else {

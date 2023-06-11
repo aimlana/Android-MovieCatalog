@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,6 +41,12 @@ public class MovieDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
+
+        setView();
+        getDataApi();
+    }
+
+    private void setView() {
         img2 = findViewById(R.id.img2);
         img3 = findViewById(R.id.img3);
         tv4 = findViewById(R.id.tv4);
@@ -48,7 +55,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         date = findViewById(R.id.tv_date);
         love = findViewById(R.id.favbutton);
         back  = findViewById(R.id.backbutton);
-
 
         back.setOnClickListener(view -> {
             finish();
@@ -63,8 +69,6 @@ public class MovieDetailActivity extends AppCompatActivity {
                 isFavorite = false;
             }
         });
-
-        getDataApi();
     }
 
     private void getDataApi() {
@@ -102,13 +106,13 @@ public class MovieDetailActivity extends AppCompatActivity {
                                     .into(img3);
                         }
                     } else {
-                        Toast.makeText(MovieDetailActivity.this, "Error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        Log.d("MovieDetailActivity", "Unable to fetch data!");
                     }
                 }
 
                 @Override
                 public void onFailure(Call<MovieDetailDataResponse> call, Throwable t) {
-                    Toast.makeText(MovieDetailActivity.this, "Unable to fetch data!", Toast.LENGTH_SHORT).show();
+                    Log.d("MovieDetailActivity", "Unable to fetch data!");
                 }
             });
         }
